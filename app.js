@@ -4,8 +4,9 @@ const toobusy = require('toobusy-js')
 const saucesRoutes = require('./routes/sauces')
 const userRoutes = require('./routes/user')
 const path = require('path')
-const hpp = require('hpp');
-const helmet = require('helmet');
+const hpp = require('hpp')
+const helmet = require('helmet')
+const mongoSanitize = require('express-mongo-sanitize')
 require('dotenv').config()
 
 const app = express()
@@ -23,7 +24,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.json({ limit: "1kb" }));
+app.use(express.json({ limit: "1kb" }))
+app.use(mongoSanitize())
 app.use(helmet())
 app.use(hpp())
 app.use((req, res, next) => {
